@@ -157,4 +157,86 @@ class CoronaController extends Controller
         return response()->json($datasembuh);
         
     }
+    public function movingAvgPositif()
+    {
+        $harian = collect(Http::get('https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian')->json());
+        
+        $sevenDays=count($harian)-7;
+        $n=0;
+        for ($i=$sevenDays; $i < count($harian); $i++) { 
+            $sembuh[]=$harian[$i]['sembuh'];
+            $meninggal[]=$harian[$i]['meninggal'];
+            $positif[]=$harian[$i]['positif'];
+            $dataSembuh[$n]['sembuh']=$harian[$i]['sembuh'];
+            $dataSembuh[$n]['meninggal']=$harian[$i]['meninggal'];
+            $dataSembuh[$n]['positif']=$harian[$i]['positif'];
+            $dataSembuh[$n]['tanggal']=date('Y-m-d',strtotime($harian[$i]['tanggal']));
+            $n++;
+        }
+        $dataSembuh[7]['sembuh']=floor(array_sum($sembuh)/7);
+        $dataSembuh[7]['meninggal']=floor(array_sum($meninggal)/7);
+        $dataSembuh[7]['positif']=floor(array_sum($positif)/7);
+        $dataSembuh[7]['tanggal']=date('Y-m-d', strtotime("+1 day"));
+ 
+
+        foreach($dataSembuh as $data){
+            $datasembuh[]=[
+                'date'=>$data['tanggal'],
+                'positif'=>$data['positif'],
+            ];
+            // $datameninggal[]=$data['meninggal'];
+            // $datapositif[]=$data['positif'];
+            // $datatanggal[]=$data['tanggal'];
+        }
+ 
+        $data = array(
+            "positif" => ($datasembuh),
+            // "positif" => ($datapositif),
+            // "meninggal" => ($datameninggal),
+            // "tanggal" => ($datatanggal),
+        );
+        return response()->json($datasembuh);
+        
+    }
+    public function movingAvgMeninggal()
+    {
+        $harian = collect(Http::get('https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian')->json());
+        
+        $sevenDays=count($harian)-7;
+        $n=0;
+        for ($i=$sevenDays; $i < count($harian); $i++) { 
+            $sembuh[]=$harian[$i]['sembuh'];
+            $meninggal[]=$harian[$i]['meninggal'];
+            $positif[]=$harian[$i]['positif'];
+            $dataSembuh[$n]['sembuh']=$harian[$i]['sembuh'];
+            $dataSembuh[$n]['meninggal']=$harian[$i]['meninggal'];
+            $dataSembuh[$n]['positif']=$harian[$i]['positif'];
+            $dataSembuh[$n]['tanggal']=date('Y-m-d',strtotime($harian[$i]['tanggal']));
+            $n++;
+        }
+        $dataSembuh[7]['sembuh']=floor(array_sum($sembuh)/7);
+        $dataSembuh[7]['meninggal']=floor(array_sum($meninggal)/7);
+        $dataSembuh[7]['positif']=floor(array_sum($positif)/7);
+        $dataSembuh[7]['tanggal']=date('Y-m-d', strtotime("+1 day"));
+ 
+
+        foreach($dataSembuh as $data){
+            $datasembuh[]=[
+                'date'=>$data['tanggal'],
+                'meninggal'=>$data['meninggal'],
+            ];
+            // $datameninggal[]=$data['meninggal'];
+            // $datapositif[]=$data['positif'];
+            // $datatanggal[]=$data['tanggal'];
+        }
+ 
+        $data = array(
+            "meninggal" => ($datasembuh),
+            // "positif" => ($datapositif),
+            // "meninggal" => ($datameninggal),
+            // "tanggal" => ($datatanggal),
+        );
+        return response()->json($datasembuh);
+        
+    }
 }

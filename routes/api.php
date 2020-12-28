@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 $router->group(['prefix'=>'apps'],function() use ($router){
     $router->get('/movingAvgSembuh',[CoronaController::class, 'movingAvgSembuh']);
-    $router->post('/login',[ApiController::class, 'login']);
+    $router->get('/movingAvgPositif',[CoronaController::class, 'movingAvgPositif']);
+    $router->get('/movingAvgMeninggal',[CoronaController::class, 'movingAvgMeninggal']);
 
 });
 // Route::get('/movingAvg', 'CoronaController@movingAvg')->name('movingAvg');
