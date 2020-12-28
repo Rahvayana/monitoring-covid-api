@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Charts\CoronaChart;
 use App\Charts\StatChart;
-use App\Contact;
 use App\Forecast;
+use App\Models\Contact as ModelsContact;
 use Illuminate\Support\Facades\Http;
 use Datatables;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +23,12 @@ class CoronaController extends Controller
     {
         $data=collect(Http::get('https://api.kawalcorona.com/indonesia')->json());
         return response($data[0]);
+    }
+
+    public function contact()
+    {
+        $data=ModelsContact::all();
+        return response($data);
     }
     
 
