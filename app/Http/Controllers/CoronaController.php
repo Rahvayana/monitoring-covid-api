@@ -18,6 +18,12 @@ class CoronaController extends Controller
     // {
     //     $this->middleware('auth');
     // }
+
+    public function index()
+    {
+        $data=collect(Http::get('https://api.kawalcorona.com/indonesia')->json());
+        return response($data[0]);
+    }
     
 
 
