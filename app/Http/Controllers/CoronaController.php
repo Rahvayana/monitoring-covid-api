@@ -25,10 +25,37 @@ class CoronaController extends Controller
         return response($data[0]);
     }
 
-    public function contact()
+    public function contactProvinsi()
     {
-        $data=ModelsContact::all();
-        return response($data);
+        $data=DB::table('contacts')->whereNull('kabupaten')->get();
+        $n=1;
+        foreach($data as $prov){
+            $provinsi[]=[
+                'id'=>$n,
+                'provinsi'=>$prov->provinsi,
+                'website'=>$prov->url,
+                'no_telp'=>$prov->no_telp,
+            ];
+
+            $n++;
+        }
+        return response($provinsi);
+    }
+    public function contactKabupaten()
+    {
+        $data=DB::table('contacts')->whereNull('provinsi')->get();
+        $n=1;
+        foreach($data as $prov){
+            $provinsi[]=[
+                'id'=>$n,
+                'provinsi'=>$prov->kabupaten,
+                'website'=>$prov->url,
+                'no_telp'=>$prov->no_telp,
+            ];
+
+            $n++;
+        }
+        return response($provinsi);
     }
     
 

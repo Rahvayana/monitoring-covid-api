@@ -19,7 +19,8 @@ $router->group(['prefix'=>'apps'],function() use ($router){
     $router->get('/movingAvgPositif',[CoronaController::class, 'movingAvgPositif']);
     $router->get('/movingAvgMeninggal',[CoronaController::class, 'movingAvgMeninggal']);
     $router->get('/index',[CoronaController::class, 'index']);
-    $router->get('/contact',[CoronaController::class, 'contact']);
+    $router->get('/contactProvinsi',[CoronaController::class, 'contactProvinsi']);
+    $router->get('/contactKabupaten',[CoronaController::class, 'contactKabupaten']);
 
 });
 // Route::get('/movingAvg', 'CoronaController@movingAvg')->name('movingAvg');
