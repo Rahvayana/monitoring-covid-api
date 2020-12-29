@@ -31,7 +31,7 @@ class CoronaController extends Controller
         $n=1;
         foreach($data as $prov){
             $provinsi[]=[
-                'id'=>$n,
+                'No'=>$n,
                 'Provinsi'=>$prov->provinsi,
                 'Website'=>$prov->url,
                 'No_Telp'=>$prov->no_telp,
@@ -47,7 +47,7 @@ class CoronaController extends Controller
         $n=1;
         foreach($data as $prov){
             $provinsi[]=[
-                'id'=>$n,
+                'No'=>$n,
                 'Kabupaten'=>$prov->kabupaten,
                 'Website'=>$prov->url,
                 'No_Telp'=>$prov->no_telp,
