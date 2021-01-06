@@ -25,6 +25,7 @@ $router->group(['prefix'=>'apps'],function() use ($router){
     $router->get('/provinceLowestChart',[CoronaController::class, 'provinceLowestChart']);
     $router->get('/posts',[CoronaController::class, 'post']);
     $router->get('/kesimpulan',[CoronaController::class, 'kesimpulan']);
+    $router->get('/case',[CoronaController::class, 'case']);
 
 });
 // Route::get('/movingAvg', 'CoronaController@movingAvg')->name('movingAvg');

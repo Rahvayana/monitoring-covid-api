@@ -296,4 +296,23 @@ class CoronaController extends Controller
         $data=DB::table('posts')->where('kategori',2)->first();
         return response()->json($data);
     }
+
+    public function case()
+    {
+        $data = collect(Http::get('https://immense-chamber-80308.herokuapp.com/coronas-list')->json());
+        $i=1;
+        foreach($data['data'] as $n){
+            $case[]=[
+                'No'=>$i,
+                'Provinsi'=>$n['attributes']['Provinsi'],
+                'Positif'=>$n['attributes']['Kasus_Posi'],
+                'Sembuh'=>$n['attributes']['Kasus_Semb'],
+                'Meninggal'=>$n['attributes']['Kasus_Meni'],
+            ];
+            $i++;
+        }
+
+        return response($case);
+        
+    }
 }
