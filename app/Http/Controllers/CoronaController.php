@@ -290,4 +290,10 @@ class CoronaController extends Controller
         return response()->json($data);
 
     }
+
+    public function kesimpulan()
+    {
+        $data=DB::table('posts')->where('kategori',1)->first();
+        return response()->json($data);
+    }
 }
