@@ -82,7 +82,7 @@ class CoronaController extends Controller
             "jumlah_mati" => $mati_province,
             "jumlah_sembuh" => $sembuh_province,
         );
-        // dd(json_encode($chart_province));
+        dd(json_encode($chart_province));
         return response()->json([
             'data'=>$chart_province
         ]);
@@ -112,6 +112,11 @@ class CoronaController extends Controller
             "jumlah_mati" => $mati_province,
             "jumlah_sembuh" => $sembuh_province,
         );
+        foreach($chart_province as $chart){
+            
+        }
+        dd(json_encode($chart_province));
+
         return response()->json([
             'data'=>$chart_province
         ]);
@@ -277,5 +282,12 @@ class CoronaController extends Controller
         );
         return response()->json($datasembuh);
         
+    }
+
+    public function post()
+    {
+        $data=DB::table('posts')->where('kategori',1)->get();
+        return response()->json($data);
+
     }
 }
