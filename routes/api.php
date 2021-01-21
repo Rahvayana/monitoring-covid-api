@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 $router->group(['prefix'=>'apps'],function() use ($router){
-    $router->get('/movingAvgSembuh',[CoronaController::class, 'movingAvgSembuh']);
-    $router->get('/movingAvgPositif',[CoronaController::class, 'movingAvgPositif']);
-    $router->get('/movingAvgMeninggal',[CoronaController::class, 'movingAvgMeninggal']);
+    $router->post('/movingAvgSembuh',[CoronaController::class, 'movingAvgSembuh']);
+    $router->post('/movingAvgPositif',[CoronaController::class, 'movingAvgPositif']);
+    $router->post('/movingAvgMeninggal',[CoronaController::class, 'movingAvgMeninggal']);
     $router->get('/index',[CoronaController::class, 'index']);
     $router->get('/contactProvinsi',[CoronaController::class, 'contactProvinsi']);
     $router->get('/contactKabupaten',[CoronaController::class, 'contactKabupaten']);

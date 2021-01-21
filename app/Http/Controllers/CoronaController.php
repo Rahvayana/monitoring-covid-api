@@ -160,127 +160,103 @@ class CoronaController extends Controller
         return response()->json($data);
     }
 
-    public function movingAvgSembuh()
+    public function movingAvgSembuh(Request $request)
     {
+        $day=$request->day;
         $harian = collect(Http::get('https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian')->json());
-        
-        $sevenDays=count($harian)-7;
+        $startday=count($harian)-$day;
         $n=0;
-        for ($i=$sevenDays; $i < count($harian); $i++) { 
+        for ($i=$startday; $i < count($harian); $i++) { 
             $sembuh[]=$harian[$i]['sembuh'];
-            $meninggal[]=$harian[$i]['meninggal'];
-            $positif[]=$harian[$i]['positif'];
             $dataSembuh[$n]['sembuh']=$harian[$i]['sembuh'];
-            $dataSembuh[$n]['meninggal']=$harian[$i]['meninggal'];
-            $dataSembuh[$n]['positif']=$harian[$i]['positif'];
             $dataSembuh[$n]['tanggal']=date('Y-m-d',strtotime($harian[$i]['tanggal']));
             $n++;
         }
-        $dataSembuh[7]['sembuh']=floor(array_sum($sembuh)/7);
-        $dataSembuh[7]['meninggal']=floor(array_sum($meninggal)/7);
-        $dataSembuh[7]['positif']=floor(array_sum($positif)/7);
-        $dataSembuh[7]['tanggal']=date('Y-m-d', strtotime("+1 day"));
- 
 
-        foreach($dataSembuh as $data){
+        $error=floor((array_sum($sembuh)/$day)-($harian[count($harian)-1]['sembuh']));
+        
+        $dataSembuh[$day]['sembuh']=floor(array_sum($sembuh)/$day);
+        $dataSembuh[$day]['tanggal']=date('Y-m-d', strtotime("+1 day"));
+        
+        $secIter=count($dataSembuh)-7;
+        for ($x=$secIter ; $x < count($dataSembuh); $x++) { 
             $datasembuh[]=[
-                'date'=>$data['tanggal'],
-                'sembuh'=>$data['sembuh'],
+                'date'=>$dataSembuh[$x]['tanggal'],
+                'sembuh'=>$dataSembuh[$x]['sembuh'],
             ];
-            // $datameninggal[]=$data['meninggal'];
-            // $datapositif[]=$data['positif'];
-            // $datatanggal[]=$data['tanggal'];
         }
  
         $data = array(
             "sembuh" => ($datasembuh),
-            // "positif" => ($datapositif),
-            // "meninggal" => ($datameninggal),
-            // "tanggal" => ($datatanggal),
+            "error" => ($error),
         );
-        return response()->json($datasembuh);
+        return response()->json($data);
         
     }
-    public function movingAvgPositif()
+    public function movingAvgPositif(Request $request)
     {
+        $day=$request->day;
         $harian = collect(Http::get('https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian')->json());
-        
-        $sevenDays=count($harian)-7;
+        $startday=count($harian)-$day;
         $n=0;
-        for ($i=$sevenDays; $i < count($harian); $i++) { 
-            $sembuh[]=$harian[$i]['sembuh'];
-            $meninggal[]=$harian[$i]['meninggal'];
-            $positif[]=$harian[$i]['positif'];
-            $dataSembuh[$n]['sembuh']=$harian[$i]['sembuh'];
-            $dataSembuh[$n]['meninggal']=$harian[$i]['meninggal'];
+        for ($i=$startday; $i < count($harian); $i++) { 
+            $sembuh[]=$harian[$i]['positif'];
             $dataSembuh[$n]['positif']=$harian[$i]['positif'];
             $dataSembuh[$n]['tanggal']=date('Y-m-d',strtotime($harian[$i]['tanggal']));
             $n++;
         }
-        $dataSembuh[7]['sembuh']=floor(array_sum($sembuh)/7);
-        $dataSembuh[7]['meninggal']=floor(array_sum($meninggal)/7);
-        $dataSembuh[7]['positif']=floor(array_sum($positif)/7);
-        $dataSembuh[7]['tanggal']=date('Y-m-d', strtotime("+1 day"));
- 
 
-        foreach($dataSembuh as $data){
+        $error=floor((array_sum($sembuh)/$day)-($harian[count($harian)-1]['positif']));
+        
+        $dataSembuh[$day]['positif']=floor(array_sum($sembuh)/$day);
+        $dataSembuh[$day]['tanggal']=date('Y-m-d', strtotime("+1 day"));
+        
+        $secIter=count($dataSembuh)-7;
+        for ($x=$secIter ; $x < count($dataSembuh); $x++) { 
             $datasembuh[]=[
-                'date'=>$data['tanggal'],
-                'positif'=>$data['positif'],
+                'date'=>$dataSembuh[$x]['tanggal'],
+                'positif'=>$dataSembuh[$x]['positif'],
             ];
-            // $datameninggal[]=$data['meninggal'];
-            // $datapositif[]=$data['positif'];
-            // $datatanggal[]=$data['tanggal'];
         }
  
         $data = array(
             "positif" => ($datasembuh),
-            // "positif" => ($datapositif),
-            // "meninggal" => ($datameninggal),
-            // "tanggal" => ($datatanggal),
+            "error" => ($error),
         );
-        return response()->json($datasembuh);
+        return response()->json($data);
         
     }
-    public function movingAvgMeninggal()
+    public function movingAvgMeninggal(Request $request)
     {
+        $day=$request->day;
         $harian = collect(Http::get('https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian')->json());
-        
-        $sevenDays=count($harian)-7;
+        $startday=count($harian)-$day;
         $n=0;
-        for ($i=$sevenDays; $i < count($harian); $i++) { 
-            $sembuh[]=$harian[$i]['sembuh'];
-            $meninggal[]=$harian[$i]['meninggal'];
-            $positif[]=$harian[$i]['positif'];
-            $dataSembuh[$n]['sembuh']=$harian[$i]['sembuh'];
+        for ($i=$startday; $i < count($harian); $i++) { 
+            $sembuh[]=$harian[$i]['meninggal'];
             $dataSembuh[$n]['meninggal']=$harian[$i]['meninggal'];
-            $dataSembuh[$n]['positif']=$harian[$i]['positif'];
             $dataSembuh[$n]['tanggal']=date('Y-m-d',strtotime($harian[$i]['tanggal']));
             $n++;
         }
-        $dataSembuh[7]['sembuh']=floor(array_sum($sembuh)/7);
-        $dataSembuh[7]['meninggal']=floor(array_sum($meninggal)/7);
-        $dataSembuh[7]['positif']=floor(array_sum($positif)/7);
-        $dataSembuh[7]['tanggal']=date('Y-m-d', strtotime("+1 day"));
- 
 
-        foreach($dataSembuh as $data){
+        $error=floor((array_sum($sembuh)/$day)-($harian[count($harian)-1]['meninggal']));
+        
+        $dataSembuh[$day]['meninggal']=floor(array_sum($sembuh)/$day);
+        $dataSembuh[$day]['tanggal']=date('Y-m-d', strtotime("+1 day"));
+        
+        $secIter=count($dataSembuh)-7;
+        for ($x=$secIter ; $x < count($dataSembuh); $x++) { 
             $datasembuh[]=[
-                'date'=>$data['tanggal'],
-                'meninggal'=>$data['meninggal'],
+                'date'=>$dataSembuh[$x]['tanggal'],
+                'meninggal'=>$dataSembuh[$x]['meninggal'],
             ];
-            // $datameninggal[]=$data['meninggal'];
-            // $datapositif[]=$data['positif'];
-            // $datatanggal[]=$data['tanggal'];
         }
  
         $data = array(
             "meninggal" => ($datasembuh),
-            // "positif" => ($datapositif),
-            // "meninggal" => ($datameninggal),
-            // "tanggal" => ($datatanggal),
+            "error" => ($error),
         );
-        return response()->json($datasembuh);
+        return response()->json($data);
         
     }
 
